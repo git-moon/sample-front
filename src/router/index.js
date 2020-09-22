@@ -1,27 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import BoardIndex from "../views/board/Index.vue"
+import BoardList from "../views/board/_router/List.vue"
+import BoardAddForm from "../views/board/_router/AddForm.vue"
+import BoardDetails from "../views/board/_router/Details.vue"
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: '/board',
+    alias: '/',
+    name: 'boardIndex',
+    component: BoardIndex,
+    children: [
+      {
+        path: 'list',
+        alias: '/',
+        component: BoardList
+      },
+      {
+        path: 'posting',
+        name: 'boardPosting',
+        component: BoardAddForm,
+        props: true
+      },
+      {
+        path: ':boardIdx',
+        name: 'boardDetails',
+        component: BoardDetails,
+        props: true
+      }
+    ]
   }
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 });
 

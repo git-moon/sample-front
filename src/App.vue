@@ -34,19 +34,17 @@
     </v-app-bar>
 
     <v-main>
-      <Board />
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Board from "./views/board/Index";
 
 export default {
   name: "App",
 
   components: {
-    Board
   },
 
   data: () => ({

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const boardClient = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'http://localhost:8088/board',
   headers: {
     'Content-Type': 'application/json'
   }
