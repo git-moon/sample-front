@@ -56,6 +56,7 @@
                 class="white--text"
                 center
                 depressed
+                @click="$router.push({ name: 'boardPosting', params: { boardIdx: boardIdx }})"
               >
                 수정
               </v-btn>

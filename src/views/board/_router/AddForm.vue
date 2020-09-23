@@ -78,14 +78,13 @@
 
   export default {
     props: {
-      propName: {
-        boardIdx: Number,
+      boardIdx: {
+        type: Number,
         default: null 
       },
     },
     data() {
       return {
-        board: null,
         rules: {
             title: value => value.length > 4 || '제목을 입력하세요',
             contents: value => value.length > 4 || '내용을 입력하세요',
@@ -100,6 +99,10 @@
         addLoading: false
       }
     },
+    created () {
+      console.log(this.boardIdx)
+      this.getBoard()
+    },
     methods: {
       async getBoard() {
         if (this.boardIdx === null) {
@@ -107,7 +110,7 @@
         }
         let {data} = await boardClient.get(`/${this.boardIdx}`)
 
-        this.board = data
+        this.addForm = data
       },
       async formSubmit() {
         if (!confirm('게시글을 저장합니다?')) {

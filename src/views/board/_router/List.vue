@@ -12,6 +12,8 @@
           :loading="getDataLoading"
           :items="boardList"
           :footer-props="{'items-per-page-options': [20, 50, 100, -1]}"
+          :server-items-length="paging.totalCount" 
+          @update:options="changeOption"
         >
           <template v-slot:item="{ item }">
             <tr class="cursor--pointer" @click="$router.push({ name: 'boardDetails', params: { boardIdx: item.idx }})">
@@ -61,6 +63,11 @@
             { text: '제목', value: 'title', align: 'center', sortable: false },
             { text: '작성일', value: 'createdTime', align: 'center' }
         ],
+        search: {
+          page: 1,
+          size: 20,
+          keyword: null
+        },
         paging: {
             page: 1,
             size: 20,
@@ -70,23 +77,18 @@
       }
     },
     created () {
-      this.getBoards()
     },
     methods: {
-      changeOption() {
-
+      changeOption(option) {
+        this.search.size = option.itemsPerPage === -1 ? this.paging.totalCount : option.itemsPerPage
+        this.search.page = option.page
+        this.getBoards()
       },
       async getBoards() {
-        let param = {
-          page: 1,
-          size: 15,
-          sort: 'idx, DESC'
-        }
-        let { data } = await boardClient.get('', param)
+        let { data } = await boardClient.get(`?page=${this.search.page}&size=${this.search.size}`)
 
-        console.log(data)
-
-        this.boardList = data
+        this.boardList = data.data
+        this.paging = data.paging
       }
     },
   }
