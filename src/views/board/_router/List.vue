@@ -11,7 +11,7 @@
           :headers="headers"
           :loading="getDataLoading"
           :items="boardList"
-          :footer-props="{'items-per-page-options': [20, 50, 100, -1]}"
+          :footer-props="{'items-per-page-options': [10, 20, 50, 100, -1]}"
           :server-items-length="paging.totalCount" 
           @update:options="changeOption"
         >
